@@ -1,0 +1,240 @@
+Angular CLI:
+Normalmente, para criarmos uma aplicação Angular, precisamos baixar várias bibliotecas e ferramentas,
+devido a esse problema, foi criado o Angular CLI, esta ferramenta é responsável por gerenciar todos os requisitos para criar a nossa aplicação.
+
+ng new meu-app
+ng -> comando para chamarmos o Angular CLI
+new -> comando para criarmos uma nova aplicação
+meu-app -> nome da nossa aplicação
+
+Comado no terminal, para iniciar a nossa aplicação Angular:
+ng serve
+
+Desativando o compartilhamento de dados da aplicação com o google
+ng analytics project off
+
+As aplicações Angular possuem LIVERELOAD  
+-> Isso significa que todas as alterações serão automaticamente renderizadas no navegador
+
+ Comando para liberação da aplicação para produção:
+ ng build --prod
+
+ nome da aplicação:
+ app.component.ts
+
+**ngOnInit -> Executado sempre que um componente é iniciado.
+
+ **Componentes
+ O novo framework do Angular não possui mais o conceito de views e controllers, passando a possuir o conceito de componentes.
+ Componentes são trechos de código que definem elementos de interface, tais como buttons, text-boxes, text-areas e entre outros, estes componentes possuem comportamentos próprios.
+ A ideia dos componentes é que eles sejam utilizados manualmente.
+
+ Podemos criar um componente manualmente e podemos criar um componente com o Angular CLI.
+ Para criarmos um componente manualmente, devemos atentar para a composição do nome de um componente:
+ 
+ Este nome abaixo, representa o padrão de desenvolvimento de um componente:
+ nome-componente.component.ts
+
+ Temos o nome do componente, separado por traços.
+ 
+ Logo na sequência, temos um .component, esta parte é uma nomenclatura do Angular, utilizada para apontar o que o nosso arquivo significa, nesse caso,
+ estamos apontando que ele é um componente.
+
+Após isso temos a extensão do nosso arquivo -> .ts
+
+Os componentes são criados por meio de classes, estas classes são criadas através da classe component, presenta na biblioteca angular.core
+Para que uma classe seja considerada um componente, precisamos utilizar uma assinatura nela, um decorator, neste caso, será o @Component({})
+Os decorators permitem que passemos configurações para as nossas classes, também podemos configurar estes comportamentos, através dos metadados.
+Além disso, também precisamos exportar a classe do nosso componente, através do comando export.
+
+Observação sobre a criação dos componentes: sempre devemos declarar os nossos componentes no nosso módulo principal, caso contrário, o Angular não reconhecerá a 
+existência deste componente.
+Nesta situação, o módulo principal é o app.module.ts, vamos importar o meu-componente.component neste módulo e vamos adiciona-lo no array declarations.
+
+Gerando componentes automaticamente:
+ng g c nome-componente
+Entendendo o comando:
+ng -> aciona o Angular CLI.
+g  -> este g, vem de generate, ele aponta para o Angular que queremos gerar alguma coisa.
+c  -> este c, vem de component, ele para para o Angular que queremos gerar um componente.
+
+**Acessando variáveis do ts, direto na interface:
+Caso tenhamos valores armazenados em variáveis, dentro do nosso componente, podemos acessa-los através do uso de chaves.
+Supondo que temos a variável nome, dentro do componente meu-componente2, para acessa-la a partir da tela, utilizamos o seguinte comando {{nome}}.
+
+Uma técnica muito importante para essa funcionalidade de acesso de variáveis na tela, é o operador Elvis, o operador Elvis é o ponto de interrogação(?)
+Ele é útil nas seguintes situações:
+Temos o objeto Aluno
+Aluno: {
+    dados: "Maria" 
+}
+
+Se acessarmos a propriedade dados, sem o operador elvis, corremos o risco de exibirmos um erro, caso o Aluno esteja nulo.
+{{Aluno.dados.nome}}   -> errado
+{{Aluno?.dados?.nome}} -> correto
+
+O operador Elvis, nos ajudará a validar a integridade dos objetos exibidos na tela.
+
+**Entendendo as diretivas de ng
+
+*ngIf e ngElse -> são utilizadas para determinar se um elemento será renderizado ou não.
+ngIf -> renderizado com true
+ngElse -> renderiza caso o ngIf seja false, para utilizarmos estas diretivas, devemos observar o exemplo no meu-component2.component.html e meu-component2.component.ts
+
+*ngSwitch -> é utilizada para determinar se um elemento deve ser exibido ou não, mas como na programação, é utilizado quando temos vários elementos.
+Podemos ver um exemplo dele, com a variável myValue
+
+*ngFor -> é utilizado para fazermos interações em listas e fazer repetições de elementos em tela.
+Para utilizarmos o *ngFor precisamos utilizar a variável auxiliar let.
+Para observarmos a implementação do *ngFor, podemos ver o arquivo meu-componente2.component.html e meu-componente2.component.ts
+
+As nossas diretivas ng são utilizadas com asteríscos, porque são simplificações de comandos que utilizam a tag template do html
+<template [ngIf]="isVisible">
+    <p>
+        {{aluno?.dados?.nome}}
+    </p>
+</template>
+
+o comando <p *ngIf="nomeVariavel"></p> executa a mesma ideia do template do ngIf
+
+Templates:
+Estrutura do componente
+
+**Bindings
+Existem quatro tipos de bindings:
+
+1 -> Interpolação
+A interpolação, também conhecida como binding unidirecional, porque vem do componente para a tela, mas não vai da tela para o componente.
+Sua utilização ocorre através das chaves, para exibir valores das variáveis na nossa tela, tal como este:
+{{minhaVariavel}}
+
+Fluxo: componente => template
+
+2 -> Property binding
+O property binding, também é utilizado para passarmos valores do componente para a tela, porém, é específico para propriedades
+
+Fluxo: componente => template
+
+3 -> Event binding
+Permite o envio de eventos da template para o componente.
+Formato do angular, para Event binding do click: on-click="handleEvents".
+Formato simplificado, para Event binding do click: (click)="handleEvents".
+
+Fluxo: template => componente
+
+4 -> Two-way Data Binding
+Comunicação bidirecional
+Os dados que forem editados no template, serão editados no componente e os dados que forem editados no componente, serão atualizados no template.
+
+Two-way Data Binding com ngModel
+ngModel é o mais recomendado, pertence aos forms model(módulo de formulário)
+
+Fluxo: template => componente
+       template <= componente
+
+
+5 -> Class Binding
+Permite alterar o estilo e a classe de um elemento, de acordo com mudanças no template.
+
+6 -> Style Binding
+Funciona da mesma maneiro que o class, a diferença é que no lugar das classes, vão as propriedades.
+
+**Serviços
+Os serviços são arquivos que recebem algoritmos lógicos, responsáveis por enviar, receber e processar dados.
+Eles representam a lógica da aplicação, além disso, eles ficam em códigos separados, com o intuito de organizar os deveres de cada arquivo, e de não poluir os nossos componentes.
+Comando para criar um serviço: ng generate service nome-servico
+Comando com atalhos: ng g s nome-servico
+
+Os serviços utilizam o decorator @Injectable, responsável por fazer as injeções de dependências da classe.
+Os serviços sempre possuem o nome service, tal como aluno.service.ts.
+
+Os serviços podem ser utilizados de três formas:
+Os serviços por padrão, são singleton, portanto, caso venhamos a alterar algum dado na classe do serviço,
+todos os locais que estão observando aquele serviço, receberão a alteração.
+1 - Forma padrão:
+Por padrão, quando criamos um serviço no Angular, o decorator @Injectable, recebe a propriedade provideIn, com o valor root.
+A propriedade providedIn:'root' também indica que o serviço deve ir para o módulo raiz, neste exemplo, seria app.module.ts.
+Se não colocarmos a propriedade providedIn dentro do decorator @Inject do serviço, teremos que indicar manualmente em qual módulo queremos utilizar o serviço. 
+Exemplo de serviço neste formato: alunos.service.ts
+
+2 - Indicando manualmente o módulo do serviço
+Podemos remover a propriedade providedIn do decorator @Injected, da classe do serviço, entretanto, para que o serviço não pare de funcionar, devemos apontar manualmente o módulo deste serviço.
+O serviço professors.service.ts, está seguindo este padrão, removes a propriedade providedIn do decorator e apontamos manualmente, o provedor do serviço, para fazer isso, fomos até o módulo app.module.ts, e colocamos o servico professores, dentro do array providers.
+Exemplo de serviço neste formato: professores.service.ts
+
+3 - A terceira forma de utilizarmos serviços, é através do decorator Component, dos nossos componentes.
+Essa configuração fará com que o nosso componente utilize uma nova instância do serviço e quando este componente for removido/destruido,
+o serviço que rodava especificamente para ele, também será removido.
+Exemplo de serviço neste formato: provas.service.ts
+
+Anotação sobre a propriedade providedIn:
+Permite que o arquivo final, gerado para a produção, seja otimizado com uma técnica chamada Three Shaken, esta técnica removerá os serviços não utilizados na aplicação, resultando em arquivos menores. (Ver webpack)
+
+**Requisições http no Angular
+Para trabalharmos com requisições http, precisamos importar o HttpClientModule, dentro do nosso app.module.ts.
+
+**Tipagem de requisições
+-> Podemos fazer a tipagem de requisições através da utilização de generics, tal como neste exemplo: http.get<TipoRequisicao>().
+A classe ou interface TipoRequisicao funciona como uma representação do objeto que está vindo da api.
+
+**Configurando parâmetros de requisições
+
+Parâmetros -> Podemos configurar os parâmetros da requisição, através do objeto HttpParams, que está presente na biblioteca @angular/common/http.
+Uma informação importante sobre este objeto, é o fato de ele é imutável, portanto, devemos utiliza-lo assim:
+
+Certo:
+const params = new HttpParams().set('nomeParametro', valorParametro)
+
+Errado:
+const params = new HttpParams();
+params.set('nomeParametro', valorParametro) //Este set() estará criando um novo objeto do HttpParams()
+
+HttpHeaders -> Podemos configurar os headers da requisição, através do objeto HttpHeaders, que está presente na biblioteca @angular/common/http.
+O objeto HttpHeaders, segue a mesma ideia do HttpParams, sendo um objeto imutável, portanto, devendo receber os sets na linha de declaração.
+
+Certo:
+const headers = new HttpHeaders().set('nomeHeader', valorHeader)
+
+Errado:
+const headers = new HttpHeaders();
+params.set('nomeHeader', valorHeader) //Este set() estará criando um novo objeto do HttpHeader()
+
+
+**RxJS
+Classe subject: 
+A classe subject nos permite criar um objeto que quando recebe uma mudança, permite a execução de uma função,
+seguindo o mesmo comportamento do subscribe.
+BehaviorSubject -> Permite passarmos uma valor inicial para o subject
+
+Removendo um subscribe do subject:
+Uma observação importante sobre os subjects, é que eles continuam rodando seus códigos, mesmo que o nosso componente já tenha sido destruído.
+Isso acarreta no fato de que precisamos sempre remover os nossos subscribes dos subjets, para isso, precisamos armazenar a assinatura do subject em uma variável.
+Tal como nesse exemplo:
+
+var mySubscription = null;
+this.mySubscription = this.projectsService.projects.subscribe(
+      projects => {
+        this.projects = projects;
+        this.handleClick();
+      }
+    )
+
+//Removendo o subscribe, normalmente este método é colocado no ngOnDestroy()
+this.mySubscription.unsubscribe();
+
+Entretanto, este modelo de remoção de subscribe pode ser muito trabalhoso, caso tenhamos vários subscribes no componente.
+Para sanar isso, podemos fazer o seguinte:
+Utilizar o operador TakeWhile, do RxJS.
+Este operador espelhará o nosso subject, até passarmos uma condição falsa para o subject, quando isso ocorrer, ele finalizará o vínculo com o subject
+
+ngOnInit(){
+    this.projectsService.projects
+    .pipe(
+        takeWhile(() => this.isAlive)
+    )
+    .subscribe(
+        project => {
+            this.projects = projects;
+        }
+    )
+}
